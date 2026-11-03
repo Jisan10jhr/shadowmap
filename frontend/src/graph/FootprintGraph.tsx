@@ -181,7 +181,12 @@ function FootprintGraph() {
 
     setSelectedId(null);
   };
-
+const resetDemo = () => {
+  setNodes(initialNodes);
+  setEdges(initialEdges);
+  setSelectedId(null);
+  setNextPosition(0);
+};
   const selectedIsRemovable =
     selectedId !== null && selectedId !== "you";
 
@@ -301,6 +306,12 @@ function FootprintGraph() {
           }}
         >
           Remove selected category
+        </button>
+                <button
+          type="button"
+          onClick={resetDemo}
+        >
+          Reset Demo
         </button>
       </div>
     </div>
