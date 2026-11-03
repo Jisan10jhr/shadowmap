@@ -1,13 +1,17 @@
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
+  addEdge,
+  applyNodeChanges,
   Background,
   Controls,
   MiniMap,
   ReactFlow,
+  type Connection,
   type Edge,
   type Node,
   type NodeMouseHandler,
+  type OnNodesChange,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -21,7 +25,7 @@ const topics: Record<string, Topic> = {
   you: {
     title: "Fictional identity",
     explanation:
-      "This is the center of the demonstration. Other information categories connect to this fictional identity.",
+      "The central identity in this demonstration. Other information categories connect to it.",
     privacyTip:
       "Avoid sharing identifying details publicly unless you understand who can access them.",
   },
@@ -35,25 +39,32 @@ const topics: Record<string, Topic> = {
   interests: {
     title: "Interests",
     explanation:
-      "Publicly shared preferences, followed topics, and group memberships may reveal hobbies and personal interests.",
+      "Publicly shared preferences and group memberships may reveal hobbies and personal interests.",
     privacyTip:
-      "Consider which interests you want to share publicly and which you prefer to keep private.",
+      "Consider which interests you want to share publicly.",
   },
   activities: {
     title: "Online activities",
     explanation:
-      "Information about online participation and activities can sometimes reveal habits or patterns.",
+      "Information about online participation can sometimes reveal habits or patterns.",
     privacyTip:
       "Be cautious about publicly sharing schedules, travel plans, or repeated routines.",
   },
   public: {
     title: "Public information",
     explanation:
-      "Information intentionally made public in different places may become easier to connect when viewed together.",
+      "Information made public in different places may become easier to connect when viewed together.",
     privacyTip:
       "Check what personal information is publicly visible and remove details you no longer need to share.",
   },
 };
+
+const categoryOptions = [
+  { id: "social", label: "Social activity" },
+  { id: "interests", label: "Interests" },
+  { id: "activities", label: "Online activities" },
+  { id: "public", label: "Public information" },
+];
 
 const initialNodes: Node[] = [
   {
@@ -99,27 +110,141 @@ const initialEdges: Edge[] = [
 ];
 
 function FootprintGraph() {
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [nodes, setNodes] = useState<Node[]>(initialNodes);
+  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [nextPosition, setNextPosition] = useState(0);
+
+  const selectedTopic = selectedId ? topics[selectedId] : null;
+
+  const onNodesChange: OnNodesChange = useCallback((changes) => {
+    setNodes((currentNodes) => applyNodeChanges(changes, currentNodes));
+  }, []);
+
+  const onConnect = useCallback((connection: Connection) => {
+    setEdges((currentEdges) => addEdge(connection, currentEdges));
+  }, []);
 
   const handleNodeClick: NodeMouseHandler = (_event, node) => {
-    const topic = topics[node.id];
-
-    if (topic) {
-      setSelectedTopic(topic);
-    }
+    setSelectedId(node.id);
   };
+
+  const addCategory = (categoryId: string) => {
+    const alreadyExists = nodes.some((node) => node.id === categoryId);
+
+    if (alreadyExists) return;
+
+    const topic = topics[categoryId];
+    if (!topic) return;
+
+    const label = categoryOptions.find(
+      (option) => option.id === categoryId
+    )?.label;
+
+    if (!label) return;
+
+    const newNode: Node = {
+      id: categoryId,
+      position: {
+        x: 100 + (nextPosition % 2) * 300,
+        y: 80 + Math.floor(nextPosition / 2) * 180,
+      },
+      data: { label },
+    };
+
+    const newEdge: Edge = {
+      id: `you-${categoryId}`,
+      source: "you",
+      target: categoryId,
+      animated: true,
+    };
+
+    setNodes((currentNodes) => [...currentNodes, newNode]);
+    setEdges((currentEdges) => [...currentEdges, newEdge]);
+    setNextPosition((position) => position + 1);
+    setSelectedId(categoryId);
+  };
+
+  const removeSelected = () => {
+    if (!selectedId || selectedId === "you") return;
+
+    setNodes((currentNodes) =>
+      currentNodes.filter((node) => node.id !== selectedId)
+    );
+
+    setEdges((currentEdges) =>
+      currentEdges.filter(
+        (edge) =>
+          edge.source !== selectedId && edge.target !== selectedId
+      )
+    );
+
+    setSelectedId(null);
+  };
+
+  const selectedIsRemovable =
+    selectedId !== null && selectedId !== "you";
 
   return (
     <div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          marginBottom: "16px",
+        }}
+      >
+        {categoryOptions.map((option) => {
+          const exists = nodes.some((node) => node.id === option.id);
+
+          return (
+            <button
+              key={option.id}
+              type="button"
+              disabled={exists}
+              onClick={() => addCategory(option.id)}
+              style={{
+                padding: "10px 14px",
+                border: "1px solid rgba(183, 162, 255, 0.35)",
+                borderRadius: "10px",
+                color: exists ? "#8984a8" : "#f1efff",
+                background: exists
+                  ? "rgba(80, 75, 110, 0.35)"
+                  : "rgba(114, 87, 216, 0.7)",
+                cursor: exists ? "not-allowed" : "pointer",
+                opacity: exists ? 0.6 : 1,
+              }}
+            >
+              {exists ? "Added: " : "+ Add: "}
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+
       <div style={{ width: "100%", height: "480px" }}>
         <ReactFlow
-          nodes={initialNodes}
-          edges={initialEdges}
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={(changes) =>
+            setEdges((currentEdges) =>
+              currentEdges.filter(
+                (edge) =>
+                  !changes.some(
+                    (change) =>
+                      change.type === "remove" && change.id === edge.id
+                  )
+              )
+            )
+          }
+          onConnect={onConnect}
+          onNodeClick={handleNodeClick}
           fitView
           nodesDraggable
           nodesConnectable={false}
           elementsSelectable
-          onNodeClick={handleNodeClick}
           proOptions={{ hideAttribution: false }}
         >
           <Background color="#766b9e" gap={22} />
@@ -156,13 +281,31 @@ function FootprintGraph() {
           </>
         ) : (
           <p style={{ color: "#b8b2d2", margin: 0 }}>
-            Select any graph node to learn what it represents and discover a
-            practical privacy tip.
+            Select a node to explore its meaning and privacy implications.
           </p>
         )}
+
+        <button
+          type="button"
+          onClick={removeSelected}
+          disabled={!selectedIsRemovable}
+          style={{
+            marginTop: "10px",
+            padding: "10px 15px",
+            border: "1px solid rgba(255, 130, 150, 0.35)",
+            borderRadius: "9px",
+            color: selectedIsRemovable ? "#ffd5df" : "#8984a8",
+            background: "rgba(180, 60, 90, 0.25)",
+            cursor: selectedIsRemovable ? "pointer" : "not-allowed",
+            opacity: selectedIsRemovable ? 1 : 0.5,
+          }}
+        >
+          Remove selected category
+        </button>
       </div>
     </div>
   );
 }
 
 export default FootprintGraph;
+
