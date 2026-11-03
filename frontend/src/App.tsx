@@ -1,5 +1,6 @@
 
 import "./App.css";
+import FootprintGraph from "./graph/FootprintGraph";
 
 function App() {
   return (
@@ -27,32 +28,29 @@ function App() {
             Discover how ordinary pieces of online information can connect
             to reveal a bigger picture of your digital footprint.
           </p>
-          <a className="primary-button" href="#how-it-works">
+          <a className="primary-button" href="#footprint-graph">
             Explore the experience <span>→</span>
           </a>
         </section>
 
-        <section className="map-preview" aria-label="Illustrative digital footprint">
+        <section className="map-preview" id="footprint-graph">
           <div className="preview-heading">
             <div>
-              <p className="eyebrow">CONNECTION PREVIEW</p>
-              <h2>A digital footprint</h2>
+              <p className="eyebrow">INTERACTIVE EXPLORATION</p>
+              <h2>Explore a digital footprint</h2>
             </div>
             <span className="demo-label">FICTIONAL DATA</span>
           </div>
 
-          <div className="constellation">
-            <span className="orbit orbit-one"></span>
-            <span className="orbit orbit-two"></span>
-            <div className="map-node center-node">YOU</div>
-            <div className="map-node node-one">Social</div>
-            <div className="map-node node-two">Interests</div>
-            <div className="map-node node-three">Activities</div>
-            <div className="map-node node-four">Public info</div>
-          </div>
+          <p className="welcome-copy">
+            Move the nodes around and explore how different information
+            categories connect to a fictional identity.
+          </p>
+
+          <FootprintGraph />
 
           <p className="preview-note">
-            An illustrative example — not a real person's data.
+            Educational demonstration only. No real personal data is used.
           </p>
         </section>
 
@@ -94,3 +92,4 @@ function App() {
 }
 
 export default App;
+
