@@ -150,6 +150,25 @@ const [profileName, setProfileName] = useState("Alex Morgan");
   const [profileLocation, setProfileLocation] = useState("Dhaka");
   const [profileInterests, setProfileInterests] = useState<string[]>([]);
   const selectedTopic = selectedId ? topics[selectedId] : null;
+  const selectedPatterns: string[] = [];
+
+if (profileLocation.trim()) {
+  selectedPatterns.push(
+    `A shared location (${profileLocation}) may provide geographic context.`
+  );
+}
+
+if (profileInterests.length > 0) {
+  selectedPatterns.push(
+    `Interests such as ${profileInterests.join(", ")} may reveal hobbies or preferences.`
+  );
+}
+
+if (profileLocation.trim() && profileInterests.length > 0) {
+  selectedPatterns.push(
+    "Combined, these details may help others infer a person's lifestyle or routines. This is a possibility, not proof."
+  );
+}
 
   const onNodesChange: OnNodesChange = useCallback((changes) => {
     setNodes((currentNodes) => applyNodeChanges(changes, currentNodes));
@@ -485,7 +504,32 @@ const resetDemo = () => {
 />
         </ReactFlow>
       </div>
+<div
+  style={{
+    marginTop: "20px",
+    padding: "20px",
+    border: "1px solid rgba(65, 217, 245, 0.3)",
+    borderRadius: "14px",
+    background: "rgba(34, 31, 69, 0.65)",
+    color: "#f1efff",
+  }}
+>
+  <h3 style={{ color: "#41d9f5", marginTop: 0 }}>
+    Pattern Connections
+  </h3>
 
+  {selectedPatterns.length > 0 ? (
+    <ul style={{ lineHeight: 1.8, paddingLeft: "20px" }}>
+      {selectedPatterns.map((pattern, index) => (
+        <li key={index}>{pattern}</li>
+      ))}
+    </ul>
+  ) : (
+    <p style={{ color: "#b8b2d2" }}>
+      Add fictional profile details to explore possible information patterns.
+    </p>
+  )}
+</div>
       <div
         style={{
           marginTop: "18px",
