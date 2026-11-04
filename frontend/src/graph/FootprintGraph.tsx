@@ -176,13 +176,21 @@ function FootprintGraph() {
     if (!label) return;
 
     const newNode: Node = {
-      id: categoryId,
-      position: {
-        x: 100 + (nextPosition % 2) * 300,
-        y: 80 + Math.floor(nextPosition / 2) * 180,
-      },
-      data: { label },
-    };
+  id: categoryId,
+  position: {
+    x: 100 + (nextPosition % 2) * 300,
+    y: 80 + Math.floor(nextPosition / 2) * 180,
+  },
+  data: { label },
+  style: {
+    background: "#30285a",
+    color: "#f1efff",
+    border: "1px solid #a78bfa",
+    borderRadius: "12px",
+    padding: "14px",
+    fontWeight: 600,
+  },
+};
 
     const newEdge: Edge = {
       id: `you-${categoryId}`,
