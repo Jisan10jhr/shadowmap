@@ -81,10 +81,18 @@ const initialNodes: Node[] = [
     },
   },
   {
-    id: "social",
-    position: { x: 60, y: 40 },
-    data: { label: "Social activity" },
+  id: "social",
+  position: { x: 60, y: 40 },
+  data: { label: "Social activity" },
+  style: {
+    background: "#30285a",
+    color: "#f1efff",
+    border: "1px solid #a78bfa",
+    borderRadius: "12px",
+    padding: "14px",
+    fontWeight: 600,
   },
+},
   {
   id: "interests",
   position: { x: 450, y: 40 },
@@ -99,15 +107,31 @@ const initialNodes: Node[] = [
   },
 },
   {
-    id: "activities",
-    position: { x: 60, y: 300 },
-    data: { label: "Online activities" },
+  id: "activities",
+  position: { x: 60, y: 300 },
+  data: { label: "Online activities" },
+  style: {
+    background: "#30285a",
+    color: "#f1efff",
+    border: "1px solid #a78bfa",
+    borderRadius: "12px",
+    padding: "14px",
+    fontWeight: 600,
   },
+},
   {
-    id: "public",
-    position: { x: 450, y: 300 },
-    data: { label: "Public information" },
+  id: "public",
+  position: { x: 450, y: 300 },
+  data: { label: "Public information" },
+  style: {
+    background: "#30285a",
+    color: "#f1efff",
+    border: "1px solid #a78bfa",
+    borderRadius: "12px",
+    padding: "14px",
+    fontWeight: 600,
   },
+},
 ];
 
 const initialEdges: Edge[] = [
