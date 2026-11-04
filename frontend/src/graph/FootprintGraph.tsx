@@ -148,6 +148,7 @@ function FootprintGraph() {
   const [nextPosition, setNextPosition] = useState(0);
 const [profileName, setProfileName] = useState("Alex Morgan");
   const [profileLocation, setProfileLocation] = useState("Dhaka");
+  const [profileInterests, setProfileInterests] = useState<string[]>([]);
   const selectedTopic = selectedId ? topics[selectedId] : null;
 
   const onNodesChange: OnNodesChange = useCallback((changes) => {
@@ -229,6 +230,7 @@ const resetDemo = () => {
   setNextPosition(0);
   setProfileName("Alex Morgan");
   setProfileLocation("Dhaka");
+  setProfileInterests([]);
 };
   const selectedIsRemovable =
     selectedId !== null && selectedId !== "you";
@@ -337,6 +339,39 @@ const resetDemo = () => {
           boxSizing: "border-box",
         }}
       />
+            <h4 style={{ color: "#c4b5fd", marginBottom: "10px" }}>
+        Fictional interests
+      </h4>
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+        {["Technology", "Gaming", "Music", "Sports", "Travel", "Photography"].map(
+          (interest) => (
+            <label
+              key={interest}
+              style={{ color: "#f1efff", display: "flex", gap: "6px" }}
+            >
+              <input
+                type="checkbox"
+                checked={profileInterests.includes(interest)}
+                onChange={(event) => {
+                  setProfileInterests((current) =>
+                    event.target.checked
+                      ? [...current, interest]
+                      : current.filter((item) => item !== interest)
+                  );
+                }}
+              />
+              {interest}
+            </label>
+          )
+        )}
+      </div>
+      <p style={{ color: "#c4b5fd", marginTop: "12px" }}>
+  Selected interests:{" "}
+  {profileInterests.length > 0
+    ? profileInterests.join(", ")
+    : "None selected"}
+</p>
     </div>
 
     <div
