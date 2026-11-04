@@ -86,10 +86,18 @@ const initialNodes: Node[] = [
     data: { label: "Social activity" },
   },
   {
-    id: "interests",
-    position: { x: 450, y: 40 },
-    data: { label: "Interests" },
+  id: "interests",
+  position: { x: 450, y: 40 },
+  data: { label: "Interests" },
+  style: {
+    background: "#30285a",
+    color: "#f1efff",
+    border: "1px solid #a78bfa",
+    borderRadius: "12px",
+    padding: "14px",
+    fontWeight: 600,
   },
+},
   {
     id: "activities",
     position: { x: 60, y: 300 },
