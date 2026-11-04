@@ -228,6 +228,7 @@ const resetDemo = () => {
   setSelectedId(null);
   setNextPosition(0);
   setProfileName("Alex Morgan");
+  setProfileLocation("Dhaka");
 };
   const selectedIsRemovable =
     selectedId !== null && selectedId !== "you";
@@ -279,6 +280,52 @@ const resetDemo = () => {
   );
 }}
         placeholder="Enter a fictional name"
+        style={{
+          width: "100%",
+          maxWidth: "400px",
+          padding: "12px",
+          borderRadius: "9px",
+          border: "1px solid #a78bfa",
+          background: "#201b40",
+          color: "#f1efff",
+          boxSizing: "border-box",
+        }}
+      />
+            <label
+        htmlFor="profile-location"
+        style={{
+          display: "block",
+          color: "#f1efff",
+          marginTop: "16px",
+          marginBottom: "8px",
+        }}
+      >
+        Fictional location
+      </label>
+
+      <input
+        id="profile-location"
+        type="text"
+        value={profileLocation}
+        onChange={(event) => {
+  const value = event.target.value;
+  setProfileLocation(value);
+
+  setNodes((currentNodes) =>
+    currentNodes.map((node) =>
+      node.id === "you"
+        ? {
+            ...node,
+            data: {
+              ...node.data,
+              label: `${profileName.trim() || "You"} (Fictional) — ${value.trim() || "Location not set"}`,
+            },
+          }
+        : node
+    )
+  );
+}}
+        placeholder="Enter a fictional location"
         style={{
           width: "100%",
           maxWidth: "400px",
