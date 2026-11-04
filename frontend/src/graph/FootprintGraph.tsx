@@ -147,6 +147,7 @@ function FootprintGraph() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [nextPosition, setNextPosition] = useState(0);
 const [profileName, setProfileName] = useState("Alex Morgan");
+  const [profileLocation, setProfileLocation] = useState("Dhaka");
   const selectedTopic = selectedId ? topics[selectedId] : null;
 
   const onNodesChange: OnNodesChange = useCallback((changes) => {
