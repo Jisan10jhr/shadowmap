@@ -226,6 +226,7 @@ const resetDemo = () => {
   setEdges(initialEdges);
   setSelectedId(null);
   setNextPosition(0);
+  setProfileName("Alex Morgan");
 };
   const selectedIsRemovable =
     selectedId !== null && selectedId !== "you";
