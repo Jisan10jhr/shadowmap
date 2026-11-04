@@ -146,7 +146,7 @@ function FootprintGraph() {
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [nextPosition, setNextPosition] = useState(0);
-
+const [profileName, setProfileName] = useState("Alex Morgan");
   const selectedTopic = selectedId ? topics[selectedId] : null;
 
   const onNodesChange: OnNodesChange = useCallback((changes) => {
@@ -230,16 +230,74 @@ const resetDemo = () => {
   const selectedIsRemovable =
     selectedId !== null && selectedId !== "you";
 
-  return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "10px",
-          marginBottom: "16px",
-        }}
+ return (
+  <div>
+    <div
+      style={{
+        marginBottom: "20px",
+        padding: "20px",
+        border: "1px solid rgba(183, 162, 255, 0.25)",
+        borderRadius: "14px",
+        background: "rgba(34, 31, 69, 0.65)",
+      }}
+    >
+      <h3 style={{ color: "#c4b5fd", marginTop: 0 }}>
+        Create a fictional profile
+      </h3>
+
+      <label
+        htmlFor="profile-name"
+        style={{ display: "block", color: "#f1efff", marginBottom: "8px" }}
       >
+        Fictional profile name
+      </label>
+
+      <input
+        id="profile-name"
+        type="text"
+        value={profileName}
+        onChange={(event) => {
+  const value = event.target.value;
+  setProfileName(value);
+
+  setNodes((currentNodes) =>
+    currentNodes.map((node) =>
+      node.id === "you"
+        ? {
+            ...node,
+            data: {
+              ...node.data,
+              label: value.trim()
+                ? `${value.trim()} (Fictional)`
+                : "You (Fictional)",
+            },
+          }
+        : node
+    )
+  );
+}}
+        placeholder="Enter a fictional name"
+        style={{
+          width: "100%",
+          maxWidth: "400px",
+          padding: "12px",
+          borderRadius: "9px",
+          border: "1px solid #a78bfa",
+          background: "#201b40",
+          color: "#f1efff",
+          boxSizing: "border-box",
+        }}
+      />
+    </div>
+
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "10px",
+        marginBottom: "16px",
+      }}
+    >
         {categoryOptions.map((option) => {
           const exists = nodes.some((node) => node.id === option.id);
 
