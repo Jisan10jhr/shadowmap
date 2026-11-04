@@ -223,6 +223,48 @@ const [profileName, setProfileName] = useState("Alex Morgan");
 
     setSelectedId(null);
   };
+  const handleInterestChange = (interest: string, checked: boolean) => {
+  const nextInterests = checked
+    ? [...profileInterests, interest]
+    : profileInterests.filter((item) => item !== interest);
+
+  setProfileInterests(nextInterests);
+
+  const interestNodes: Node[] = nextInterests.map((item, index) => ({
+    id: `profile-interest-${item}`,
+    position: { x: 650, y: 40 + index * 70 },
+    data: { label: item },
+    style: {
+      background: "#30285a",
+      color: "#f1efff",
+      border: "1px solid #41d9f5",
+      borderRadius: "12px",
+      padding: "12px",
+      fontWeight: 600,
+    },
+  }));
+
+  setNodes((currentNodes) => [
+    ...currentNodes.filter(
+      (node) => !node.id.startsWith("profile-interest-")
+    ),
+    ...interestNodes,
+  ]);
+
+  setEdges((currentEdges) => [
+    ...currentEdges.filter(
+      (edge) =>
+        !edge.source.startsWith("profile-interest-") &&
+        !edge.target.startsWith("profile-interest-")
+    ),
+    ...nextInterests.map((item) => ({
+      id: `interests-${item}`,
+      source: "interests",
+      target: `profile-interest-${item}`,
+      animated: true,
+    })),
+  ]);
+};
 const resetDemo = () => {
   setNodes(initialNodes);
   setEdges(initialEdges);
@@ -353,13 +395,9 @@ const resetDemo = () => {
               <input
                 type="checkbox"
                 checked={profileInterests.includes(interest)}
-                onChange={(event) => {
-                  setProfileInterests((current) =>
-                    event.target.checked
-                      ? [...current, interest]
-                      : current.filter((item) => item !== interest)
-                  );
-                }}
+               onChange={(event) => {
+  handleInterestChange(interest, event.target.checked);
+}}
               />
               {interest}
             </label>
