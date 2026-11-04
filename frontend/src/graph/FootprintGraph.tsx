@@ -290,8 +290,10 @@ const resetDemo = () => {
   nodeColor="#a78bfa"
   maskColor="rgba(16, 16, 39, 0.65)"
   position="bottom-center"
-  width={150}
-  height={90}
+  style={{
+    width: 150,
+    height: 90,
+  }}
 />
         </ReactFlow>
       </div>
