@@ -169,7 +169,25 @@ if (profileLocation.trim() && profileInterests.length > 0) {
     "Combined, these details may help others infer a person's lifestyle or routines. This is a possibility, not proof."
   );
 }
+const privacyInsights: string[] = [];
 
+if (profileLocation.trim()) {
+  privacyInsights.push(
+    "Location exposure: A publicly shared location can provide geographic context. Avoid sharing your exact home address or daily whereabouts."
+  );
+}
+
+if (profileInterests.length > 0) {
+  privacyInsights.push(
+    "Interest exposure: Shared interests can reveal hobbies and preferences. Review which details are visible to the public."
+  );
+}
+
+if (profileLocation.trim() && profileInterests.length > 0) {
+  privacyInsights.push(
+    "Combined information: Separate details can become more revealing when viewed together. Share only what is necessary."
+  );
+}
   const onNodesChange: OnNodesChange = useCallback((changes) => {
     setNodes((currentNodes) => applyNodeChanges(changes, currentNodes));
   }, []);
