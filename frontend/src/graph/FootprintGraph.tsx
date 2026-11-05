@@ -548,6 +548,36 @@ const resetDemo = () => {
     </p>
   )}
 </div>
+          <div
+        style={{
+          marginTop: "20px",
+          padding: "20px",
+          border: "1px solid rgba(244, 184, 96, 0.3)",
+          borderRadius: "14px",
+          background: "rgba(34, 31, 69, 0.65)",
+          color: "#f1efff",
+        }}
+      >
+        <h3 style={{ color: "#f4b860", marginTop: 0 }}>
+          Privacy Risk Insights
+        </h3>
+
+        {privacyInsights.length > 0 ? (
+          <ul style={{ lineHeight: 1.8, paddingLeft: "20px" }}>
+            {privacyInsights.map((insight, index) => (
+              <li key={index}>{insight}</li>
+            ))}
+          </ul>
+        ) : (
+          <p style={{ color: "#b8b2d2" }}>
+            Add fictional profile details to explore potential privacy risks.
+          </p>
+        )}
+
+        <p style={{ color: "#b8b2d2", fontSize: "13px", marginBottom: 0 }}>
+          These are educational indicators, not a real security assessment.
+        </p>
+      </div>
       <div
         style={{
           marginTop: "18px",
