@@ -540,3 +540,17 @@ body::after {
   backdrop-filter: blur(8px);
   box-shadow: 0 0 15px rgba(65, 217, 245, 0.12);
 }
+/* ShadowMap - React Flow attribution styling */
+.react-flow__attribution {
+  background: rgba(17, 25, 35, 0.95) !important;
+  color: #41d9f5 !important;
+  border: 1px solid rgba(65, 217, 245, 0.4);
+  border-radius: 6px;
+  padding: 5px 9px;
+  opacity: 1 !important;
+}
+
+.react-flow__attribution a {
+  color: #41d9f5 !important;
+  text-decoration: none;
+}
