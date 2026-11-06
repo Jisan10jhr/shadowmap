@@ -87,13 +87,13 @@ function App() {
   <p>Fictional examples. Privacy-first learning.</p>
 
   <p className="creator-credit">
-    Created with purpose by{" "}
+View the project on{" "}
     <a
       href="https://github.com/Jisan10jhr"
       target="_blank"
       rel="noopener noreferrer"
     >
-      MD JISAN HOSSAN RIMON
+      GitHub
     </a>
   </p>
 
