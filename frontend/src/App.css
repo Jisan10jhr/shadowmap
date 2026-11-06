@@ -496,3 +496,28 @@ body::after {
   fill: #a78bfa !important;
   stroke: #c4b5fd !important;
 }
+.creator-credit {
+  margin-top: 22px;
+  font-size: 14px;
+  color: #b8b2d2;
+}
+
+.creator-credit a {
+  color: #41d9f5;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.creator-credit a:hover {
+  color: #a78bfa;
+  text-decoration: underline;
+}
+
+.creator-watermark {
+  margin-top: 10px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #8984a8;
+  opacity: 0.8;
+}
