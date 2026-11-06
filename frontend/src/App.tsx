@@ -83,9 +83,24 @@ function App() {
         </section>
 
         <footer className="site-footer">
-          <p>ShadowMap · Built for digital privacy awareness.</p>
-          <p>Fictional examples. Privacy-first learning.</p>
-        </footer>
+  <p>ShadowMap · Built for digital privacy awareness.</p>
+  <p>Fictional examples. Privacy-first learning.</p>
+
+  <p className="creator-credit">
+    Created with purpose by{" "}
+    <a
+      href="https://github.com/Jisan10jhr"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      MD JISAN HOSSAN RIMON
+    </a>
+  </p>
+
+  <p className="creator-watermark">
+    © 2026 MD JISAN HOSSAN RIMON · ShadowMap
+  </p>
+</footer>
       </main>
     </div>
   );
