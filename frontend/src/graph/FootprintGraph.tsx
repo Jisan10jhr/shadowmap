@@ -70,7 +70,7 @@ const initialNodes: Node[] = [
   {
     id: "you",
     position: { x: 250, y: 160 },
-    data: { label: "You (Fictional)" },
+    data: { label: "Alex Morgan (Fictional) — Dhaka" },
     style: {
       background: "#a78bfa",
       color: "#17132d",
@@ -351,9 +351,7 @@ const resetDemo = () => {
             ...node,
             data: {
               ...node.data,
-              label: value.trim()
-                ? `${value.trim()} (Fictional)`
-                : "You (Fictional)",
+              label: `${value.trim() || "You"} (Fictional) — ${profileLocation.trim() || "Location not set"}`,
             },
           }
         : node
