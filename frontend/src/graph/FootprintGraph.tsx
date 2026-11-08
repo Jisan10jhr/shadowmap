@@ -244,22 +244,33 @@ if (profileLocation.trim() && profileInterests.length > 0) {
     setSelectedId(categoryId);
   };
 
-  const removeSelected = () => {
-    if (!selectedId || selectedId === "you") return;
+ const removeSelected = () => {
+  if (!selectedId || selectedId === "you") return;
 
-    setNodes((currentNodes) =>
-      currentNodes.filter((node) => node.id !== selectedId)
-    );
+  const idsToRemove = new Set([selectedId]);
 
-    setEdges((currentEdges) =>
-      currentEdges.filter(
-        (edge) =>
-          edge.source !== selectedId && edge.target !== selectedId
-      )
-    );
+ if (selectedId === "interests") {
+  profileInterests.forEach((interest) => {
+    idsToRemove.add(`profile-interest-${interest}`);
+  });
 
-    setSelectedId(null);
-  };
+  setProfileInterests([]);
+}
+
+  setNodes((currentNodes) =>
+    currentNodes.filter((node) => !idsToRemove.has(node.id))
+  );
+
+  setEdges((currentEdges) =>
+    currentEdges.filter(
+      (edge) =>
+        !idsToRemove.has(edge.source) &&
+        !idsToRemove.has(edge.target)
+    )
+  );
+
+  setSelectedId(null);
+};
   const handleInterestChange = (interest: string, checked: boolean) => {
   const nextInterests = checked
     ? [...profileInterests, interest]
