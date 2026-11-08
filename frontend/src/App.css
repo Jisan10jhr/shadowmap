@@ -554,3 +554,14 @@ body::after {
   color: #41d9f5 !important;
   text-decoration: none;
 }
+/* Mobile creator watermark */
+@media (max-width: 600px) {
+  .fixed-watermark {
+    font-size: 9px;
+    letter-spacing: 0.4px;
+    padding: 7px 10px;
+    right: 12px;
+    bottom: 16px;
+    max-width: calc(100vw - 24px);
+  }
+}
