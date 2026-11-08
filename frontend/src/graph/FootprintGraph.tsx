@@ -500,17 +500,11 @@ const resetDemo = () => {
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
-          onEdgesChange={(changes) =>
-            setEdges((currentEdges) =>
-              currentEdges.filter(
-                (edge) =>
-                  !changes.some(
-                    (change) =>
-                      change.type === "remove" && change.id === edge.id
-                  )
-              )
-            )
-          }
+         onEdgesChange={(changes) =>
+  setEdges((currentEdges) =>
+    applyEdgeChanges(changes, currentEdges)
+  )
+}
           onConnect={onConnect}
           onNodeClick={handleNodeClick}
           fitView
