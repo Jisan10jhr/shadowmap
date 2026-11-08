@@ -150,7 +150,18 @@ function FootprintGraph() {
 const [profileName, setProfileName] = useState("Alex Morgan");
   const [profileLocation, setProfileLocation] = useState("Dhaka");
   const [profileInterests, setProfileInterests] = useState<string[]>([]);
-  const selectedTopic = selectedId ? topics[selectedId] : null;
+  const selectedTopic = selectedId
+  ? topics[selectedId] ??
+    (selectedId.startsWith("profile-interest-")
+      ? {
+          title: selectedId.replace("profile-interest-", ""),
+          explanation:
+            "This is an example of an interest that someone may reveal through their public profile or online activity.",
+          privacyTip:
+            "Think carefully about which personal preferences you want to make publicly visible.",
+        }
+      : null)
+  : null;
   const selectedPatterns: string[] = [];
 
 if (profileLocation.trim()) {
