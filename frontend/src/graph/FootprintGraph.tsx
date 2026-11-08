@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import {
   addEdge,
   applyNodeChanges,
+  applyEdgeChanges,
   Background,
   Controls,
   MiniMap,
